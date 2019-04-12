@@ -1,4 +1,5 @@
 
+
 function Project(){
 	this.clear = document.querySelector(".clear");
 	
@@ -10,7 +11,7 @@ Project.prototype.init = function(){
 	this.tab();
 	this.Page();
 }
-
+//轮播图
 	Project.prototype.Banner = function(){
 		$("#nav-left").children("a").click(function() {
 			console.log($(this).index())
@@ -24,14 +25,16 @@ Project.prototype.init = function(){
 		})		
 	}
 	
+//	商品页面
 	Project.prototype.load = function(){
 			var that = this;
-			ajax({
+			$.ajax({
 				url:"./json/goods.json",
 				success:function(res){
 	//				3.请求成功之后,渲染页面并创建页码
-					that.res = JSON.parse(res);
-					console.log(that.res)
+//					console.log(res);
+					that.res = res;
+//					console.log(that.res)
 					that.display();
 				},
 				error:function(){
@@ -53,27 +56,31 @@ Project.prototype.init = function(){
 							<p>${this.res[i].a1}</p>
 							<i>
 								<span>${this.res[i].a2}</span>
-								<p><span class="iconfont icon-ban"></span>收藏</p>
+								<p class="xx"><span class="iconfont icon-ban"></span>加进购物车</p>
 							</i>
 						</li>`
 				
 			}
 			
-			
+		//商品详情页	
 			
 			this.clear.innerHTML = str;
 			$(".clear").children("li").click(function(){
-					console.log($(this))
-					
+//					console.log(1);
+					$.cookie("good",$(this).attr("goods"))
+//					console.log($.cookie("good"))
+					window.location.href = "Details page.html";
+//					$(location).attr('href','Details page.html')
+//					console.log($(this).attr("goods"))
 				})
 		},
 
 
-
+//选项卡切换
 Project.prototype.tab = function(){
 	$(".cont").find("li").click(function(){
 			$(this).addClass("active").siblings().removeClass("active");
-			console.log($(this).index())
+//			console.log($(this).index())
 			$(".box1").children("p").removeClass("active").eq($(this).index()).addClass("active");
 		})
 	
@@ -87,51 +94,8 @@ Project.prototype.Page = function(){
 
 
 
-
-		function Search(){
-//			1.选元素,设置url
-			this.txt = document.getElementById("txt");
-			this.ul = document.getElementById("list");
-			this.url = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su";
-			
-//			2.绑定事件
-			this.addEvent();
-		}
-		Search.prototype.addEvent = function(){
-			var that = this;
-			this.txt.onkeyup = function(){
-//				3.保存输入框的内容
-				that.val = this.value;
-//				4.准备请求数据
-				that.load()
-			}
-		}
-		Search.prototype.load = function(){
-			var that = this;
-			jsonp(this.url,function(res){
-//				5.将数据保存到将来的实例对象
-				that.res = res;
-//				6.请求成功之后,才能够去渲染页面
-				that.display();
-			},{
-				_name:"cb",
-				cb:"asdasgtdsa",
-				wd:this.val
-			})
-		}
-		Search.prototype.display = function(){
-//			7.渲染页面
-			var str= ""
-			this.res.s.forEach(function(v){
-				str += `<li>${v}</li>`;
-			})
-			this.ul.innerHTML = str;
-		}
-		
-		new Search()
-
 new Project();
-
+//懒加载：
 var aimg = document.querySelectorAll(".ljz img")
 var clientH = document.documentElement.clientHeight
 //console.log(aimg)
@@ -148,7 +112,49 @@ window.onscroll = function(){
 }
 
 
-
+		function Search(){
+//			1.选元素,设置url
+			this.txt = document.getElementById("txt");
+			this.ul = document.getElementById("list");
+			this.url = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su";
+//			2.绑定事件
+			this.addEvent();
+		}
+		Search.prototype.addEvent = function(){
+			var that = this;
+			this.txt.onkeyup = function(){
+//				3.保存输入框的内容
+				that.val = this.value;
+//				console.log(that.val)
+//				4.准备请求数据
+				that.load()
+			}
+		}
+		Search.prototype.load = function(){
+			var that = this;
+			jsonp(this.url,function(res){
+//				5.将数据保存到将来的实例对象
+				that.res = res;
+//				console.log(that.res)
+//				6.请求成功之后,才能够去渲染页面
+				that.display();
+			},{
+				_name:"cb",
+				cb:"asdasgtdsa",
+				wd:this.val
+			})
+		}
+		Search.prototype.display = function(){
+//			7.渲染页面
+			var str= ""
+			this.res.s.forEach(function(v){
+				str += `<li>${v}</li>`;
+			})
+			this.ul.innerHTML = str;
+//			console.log(this.ul.innerHTML)
+		}
+		
+		new Search()
 
 
 

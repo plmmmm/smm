@@ -54,7 +54,7 @@
 #nav-left{width:50px;height:450px;position:fixed;left:100px;top:80px;background:#E5E5E5;z-index: 999;}
 #nav-left a{width:50px;height:49px;display: block;border-bottom: 1px solid #999999;text-align: center;}
 #nav-left a:hover{background: red;}
-#nav-left a:nth-child(6){background: red;}
+
 #nav-left a p{display: block;text-align: center;width:30px;padding:6px 0 0 8px;}
 #nav-left a p.tee{display: block;padding:14px 0 0 8px;}
 
@@ -68,7 +68,7 @@
 #main .main-c ul li p{margin:0 10px;font: 14px/2 "";color:#666666;}
 #main .main-c ul li i{height:46px;margin-top:20px;display: block;}
 #main .main-c ul li i span{color:red;font: 600 16px/2 "";margin-left:10px;float: left;}
-#main .main-c ul li i p{margin-left:135px;display: block;width:60px;height:26px;border-radius: 10px;border:1px solid #C0C0C0;}
+#main .main-c ul li i p{margin-left:100px;display: block;width:100px;height:26px;border-radius: 10px;border:1px solid #C0C0C0;text-align: center;}
 #main .main-c ul li i p span{font-size:12px;float: left;margin:2px 3px 0 7px;color:#999999;}
 #main .main-c ul li i p span:active{color: red;}
 

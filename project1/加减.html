@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			.cont{width:50px;height:30px;margin:50px auto;}
+			.cont i{width:18px;height:26px;border:1px solid #999999;position:absolute;display: inline-block;left:656px;}
+			.cont i:nth-child(1){left:592px;}
+			.cont input{width:42px;height:25px;border:1px solid #C0C0C0;position:absolute;text-align: center;}
+			
+		</style>
+	</head>
+	<body>
+		<div class="cont">
+			<i>-</i>
+			<input type="text" name="" id="" value="1" />
+			<i>+</i>
+		</div>
+	</body>
+	<!--<script src="libs/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>-->
+	<script src="libs/jquery.2.2.4.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	function add(){
+		this.init();
+	}
+	
+	add.prototype.init = function(){
+			var i = 1;
+			$(".cont").children().eq(0).on("click",function(){
+//				console.log($(".cont").children("input").val())
+				if($(".cont").children("input").val() == 1){
+					$(".cont").children("input").val(1) 
+				}else{
+					$(".cont").children("input").val(i--) 
+				}
+			})
+			
+			$(".cont").children().eq(2).on("click",function(){
+				if($(".cont").children("input").val() == 20){
+					$(".cont").children("input").val(20)
+				}else{
+					$(".cont").children("input").val(i++)
+				}
+			})
+	};
+	
+	
+	new add()
+	
+	
+	
+//		Number(){
+//			var i = 1;
+//			$(".cont").children().eq(0).on("click",function(){
+//				console.log(1)
+//			})
+//		}
+//		
+//		new Number()	
+		
+		
+		
+		
+		
+	</script>
+</html>

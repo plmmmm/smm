@@ -12,6 +12,148 @@
 //			7.同步大图片百分比移动
 			
 			function RotationChart(){
+				this.Details();
+				
+			}
+			
+			
+			RotationChart.prototype.Details = function(){
+				var that = this;
+				$.ajax({
+					url:"./json/goods.json",
+					type:"GET",
+					dataType:"json",
+					success:function(res){						
+						that.Display(res);					 
+					}
+				})
+			}
+//			JSON.parse($.cookie("good")).id)
+			
+			RotationChart.prototype.Display = function(res){
+				var str = "";
+				for(var i=0;i<res.length;i++){
+					if(res[i].id == $.cookie("good")){
+						str =`<"div id="cont">
+										<div class="l_box">
+											<div  class="boximg">
+												<a href="#"><img src="${res[i].src}"/></a>
+												<a href="#"><img src="imgs/1241039886_360x360.jpg"/></a>
+												<a href="#"><img src="imgs/1323660899.jpg"/></a>
+												<a href="#"><img src="imgs/1416208109.jpg"/></a>
+												<a href="#"><img src="imgs/1504041424.jpg"/></a>
+												<a href="#"><img src="imgs/1525961910.jpg"/></a>
+												<a href="#"><img src="imgs/570213011.jpg"/></a>
+												<i></i>
+												<p></p>
+											</div>
+										</div>
+											<div class="r_box">
+												<a href="#"><img src="${res[i].src}"/></a>
+												<a href="#"><img src="imgs/1241039886_360x360.jpg"/></a>
+												<a href="#"><img src="imgs/1323660899.jpg"/></a>
+												<a href="#"><img src="imgs/1416208109.jpg"/></a>
+												<a href="#"><img src="imgs/1504041424.jpg"/></a>
+												<a href="#"><img src="imgs/1525961910.jpg"/></a>
+												<a href="#"><img src="imgs/570213011.jpg"/></a>
+											</div>
+											<div  class="frame">
+												<div class="frameimg">
+													<a href="#"><img src="${res[i].src}"/></a>
+													<a href="#"><img src="imgs/1241039886_360x360.jpg"/></a>
+													<a href="#"><img src="imgs/1323660899.jpg"/></a>
+													<a href="#"><img src="imgs/1416208109.jpg"/></a>
+													<a href="#"><img src="imgs/1504041424.jpg"/></a>
+													<a href="#"><img src="imgs/1525961910.jpg"/></a>
+													<a href="#"><img src="imgs/570213011.jpg"/></a>
+												</div>
+												<div class="but">
+													<input type="button" name="" id="left" value="<<" />
+													<input type="button" name="" id="right" value=">>" />
+												</div>
+											</div>
+									
+									
+								<!--内容详情-->	
+								
+										<div id="content">
+											<h3>${res[i].a4}</h3>
+											<div class="content-1">
+												<p>活动价：<strong>${res[i].a5}</strong>税费：商品价格已含税</p>
+												<p>好评率：<span>${res[i].a6}</span>(共14条评价)</p>
+											</div>
+											<div class="content-2">
+												<p>配      送由 |百联海外专营仓| 发货保税区发货5-10个工作日，直邮5-20个工作日</p>
+												<p>服      务 由"百联海外专营" 提供发货和售后服务</p>
+											</div>
+											购买数量：<input type="" name="" id="" value="" />
+											<div class="content-3"  index="${res[i].id}">
+												<a class="page" href="shopcar.html">加入购物车</a>
+												<a href="#">立即购买</a>
+											</div>
+											
+										</div>
+								
+								</div>`;
+					}
+				}
+				$("#cont").html(str);
+				this.fn();
+				this.addEvent();
+			}
+			
+	
+		RotationChart.prototype.addEvent = function(){	
+		this.cont = document.querySelector(".content-3");
+   		var that = this;
+   		this.cont.addEventListener("click",function(eve){
+   			if(eve.target.className == "page"){
+// 				console.log(1)
+   				that.id = eve.target.parentNode.getAttribute("index")
+   				that.setCookie();
+   			}
+   		})
+   	}
+			
+			RotationChart.prototype.setCookie = function(){
+				this.goods = getCookie("goods");
+				console.log(this.goods)
+//				情况1:第一次添加
+				if(this.goods == ""){
+					this.goods = [{
+						id:this.id,
+						num:1
+					}];
+				}else{
+//					情况2:不是第一次添加
+					this.goods = JSON.parse(this.goods);
+//					新情况1：这次点击的是老数据
+					var onoff = true;
+					this.goods.forEach((v)=>{
+						if(v.id == this.id){
+							v.num++
+							onoff = false;
+						}
+					})
+					
+//					新情况2：这次点击的是新数据
+					if(onoff){
+						this.goods.push({
+							id:this.id,
+							num:1
+						})
+					}
+				}
+//				所有关于数组的操作结束之后,将数组转成字符再设置到cookie中
+				setCookie("goods",JSON.stringify(this.goods))
+				
+			}
+			
+			
+			
+			
+			
+			RotationChart.prototype.fn = function(){
 				this.Lbox = document.querySelector(".l_box");
 				this.Lboximg = document.querySelector(".boximg");
 				this.Lbox_img = document.querySelectorAll(".boximg img");
@@ -22,12 +164,12 @@
 				this.butimg = document.querySelectorAll(".frameimg img");
 				this.butleft = document.querySelector("#left");
 				this.butright = document.querySelector("#right");
+//				console.log(this.butleft)
 //				this.frameimg.style.width = this.butimg.length * this.butimg[0].offsetWidth + "px";
 				this.index = 0;
 				this.index_1 = 0;
 				this.init();
 			}
-			
 			RotationChart.prototype.init = function(){
 				var that = this;
 				this.butleft.onclick = function(){
@@ -42,9 +184,9 @@
 				this.Lbox.onmouseout = function(){
 					that.mouseout();
 				}				
-				this.click();				
+				this.click();
+				
 			}
-			
 			
 			RotationChart.prototype.click = function(){
 				for(var i=0;i<this.butimg.length;i++){
@@ -144,7 +286,52 @@
 					}
 					this.Lbox_img[this.index_1].style.display = "block";
 					this.Rboximg[this.index_1].style.display = "block";
-			}
+			}	
 			
 		
 		
+//		关键字搜索
+
+//		function Search(){
+////			1.选元素,设置url
+//			this.txt = document.getElementById("txt");
+//			this.ul = document.getElementById("list");
+//			this.url = "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su";  //接口
+////			2.绑定事件
+//			this.addEvent();
+//		}
+//		Search.prototype.addEvent = function(){
+//			var that = this;
+//			this.txt.onkeyup = function(){
+////				3.保存输入框的内容
+//				that.val = this.value;
+////				console.log(that.val)
+////				4.准备请求数据
+//				that.load()
+//			}
+//		}
+//		Search.prototype.load = function(){
+//			var that = this;
+//			jsonp(this.url,function(res){
+////				5.将数据保存到将来的实例对象
+//				that.res = res;
+////				console.log(that.res)
+////				6.请求成功之后,才能够去渲染页面
+//				that.display();
+//			},{
+//				_name:"cb",
+//				cb:"asdasgtdsa",
+//				wd:this.val
+//			})
+//		}
+//		Search.prototype.display = function(){
+////			7.渲染页面
+//			var str= ""
+//			this.res.s.forEach(function(v){
+//				str += `<li>${v}</li>`;
+//			})
+//			this.ul.innerHTML = str;
+////			console.log(this.ul.innerHTML)
+//		}
+		
+//		new Search();

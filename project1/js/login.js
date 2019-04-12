@@ -29,7 +29,11 @@
 							default:
 //								因为接口问题,返回json数据时表示成功,json数据不好判断,所以,直接使用default判断
 								$("span").html("登录成功，得到自己的用户数据了");
+								
 								that.res = JSON.parse(res)
+								setTimeout(function(){
+									location.href = "index.html";
+								},2000)
 								console.log(that.res)
 						}
 					},
